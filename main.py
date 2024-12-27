@@ -103,7 +103,7 @@ def fetch_from_lista(topic, language="es", page_size=5, domain_string=None):
         "language": language,
         "pageSize": page_size,
         "sortBy": "publishedAt",
-        "domains": domain_string  # clave para filtrar a esos periódicos
+        "domains": domain_string
     }
     headers = {
         "Authorization": f"Bearer {NEWSAPI_KEY}"
@@ -141,7 +141,7 @@ def fetch_news(topic, language="es", page_size=5, source="newsapi", domain_strin
 
 
 # ------------------------------------------------------------------------------
-# 6. FILTRADO POR TIPO DE ARTÍCULO
+# 6. FILTRADO POR TIPO DE ARTICULO
 # ------------------------------------------------------------------------------
 
 def filter_by_article_type(articles, article_type):
@@ -183,7 +183,7 @@ def filter_by_article_type(articles, article_type):
 
 
 # ------------------------------------------------------------------------------
-# 7. LÓGICA PRINCIPAL: RESUMIR NOTICIAS
+# 7. LOGICA PRINCIPAL: RESUMIR NOTICIAS
 # ------------------------------------------------------------------------------
 
 def run_agent(args):
@@ -197,12 +197,9 @@ def run_agent(args):
     print(f"\nBuscando noticias sobre '{topic}' en idioma '{language}'...")
     print(f"Fuente: {source} | Máx resultados: {page_size} | Tipo artículo: {article_type}")
 
-    # 1. Obtener articulos
     articles = fetch_news(topic, language, page_size, source=source, domain_string=domain_string)
-    # 2. Filtrar tipo
     filtered = filter_by_article_type(articles, article_type)
 
-    # 3. Resumir cada noticia con dynamic_summarize
     if not filtered:
         print("No se encontraron noticias tras el filtro.")
         return
@@ -228,7 +225,7 @@ def run_agent(args):
 
 
 # ------------------------------------------------------------------------------
-# 8. ARGUMENTOS DE LÍNEA DE COMANDOS & SCHEDULE
+# 8. ARGUMENTOS DE LINEA DE COMANDOS & SCHEDULE
 # ------------------------------------------------------------------------------
 
 def parse_arguments():
@@ -264,7 +261,6 @@ def parse_arguments():
     parser.add_argument("--lista",
                         help="Cadena de dominios para 'lista'. Ej: 'bbc.co.uk,washingtonpost.com,lemonde.fr,...'")
 
-    # Si no hay argumentos, mostrar ayuda y salir
     if len(sys.argv) == 1:
         print("No se han proporcionado argumentos. Usa:")
         print("  python main.py --help")
@@ -276,7 +272,6 @@ def parse_arguments():
 if __name__ == "__main__":
     args = parse_arguments()
 
-    # Programar schedule
     if args.once:
         run_agent(args)
 
