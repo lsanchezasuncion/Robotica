@@ -24,11 +24,11 @@ summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 # 4. FUNCION AUXILIAR PARA RESUMIR SIN VER WARNINGS "max_length"
 def dynamic_summarize(text, min_len=100, max_len=450):
     """
-    Ajusta max_length dinámicamente según la longitud del texto
+    Ajusta max_length dinamicamente según la longitud del texto
     para evitar el warning "Your max_length is set to X, but your input_length is only Y..."
     """
     word_count = len(text.split())
-    # Cap max_len al 80% del número de palabras (heurística)
+    # Cap max_len al 80% del numero de palabras (heuristica)
     estimated_max_len = min(max_len, int(word_count * 0.8))
 
     # Asegurar que no sea menor que min_len
